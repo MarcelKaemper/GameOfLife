@@ -20,20 +20,28 @@ void render(void){
 
 		float size = 0.1;
 
-		for(int i = 0; i<10; i++){
-				for(int j = 0; j<10; j++){
+		int cols = 4;
+		int rows = 4;
+		int game[16] = {1,0,1,0,
+						1,1,1,1,
+						1,1,0,1,
+						1,0,1,0};
+
+		for(int i = 0; i<cols; i++){
+				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
 
-						glColor3f(1,0,0);
+						if(game[i*4+j] == 0){
+							glColor3f(1,0,0);
+						}else{
+							glColor3f(0,0,1);
+						}
 						glVertex2f(-1+size*j,1-size*i);
 
-						glColor3f(0,1,0);
 						glVertex2f(-1+size+size*j,1-size*i);
 
-						glColor3f(0,0,1);
 						glVertex2f(-1+size+size*j,1-size-size*i);
 
-						glColor3f(1,0,0);
 						glVertex2f(-1+size*j,1-size-size*i);
 
 						glEnd();
