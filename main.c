@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <stdio.h>
+#include "array.c"
 
 void render(void);
 
@@ -18,20 +19,16 @@ int main(int argc, char **argv){
 void render(void){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		float size = 0.1;
+		float size = 0.05;
 
-		int cols = 4;
-		int rows = 4;
-		int game[16] = {1,0,1,0,
-						1,1,1,1,
-						1,1,0,1,
-						1,0,1,0};
+		int cols = 20;
+		int rows = 20;
 
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
 
-						if(game[i*4+j] == 0){
+						if(game[i*20+j] == 0){
 							glColor3f(1,0,0);
 						}else{
 							glColor3f(0,0,1);
