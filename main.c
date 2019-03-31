@@ -19,16 +19,16 @@ int main(int argc, char **argv){
 void render(void){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		float size = 0.05;
+		float size = 0.015;
 
-		int cols = 20;
-		int rows = 20;
+		int cols = 100;
+		int rows = 100;
 
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
 
-						if(game[i*20+j] == 0){
+						if(game[i*100+j] == 0){
 							glColor3f(1,0,0);
 						}else{
 							glColor3f(0,0,1);
