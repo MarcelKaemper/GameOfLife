@@ -61,7 +61,14 @@ void gameTick(void){
 				for(int j = 0; j<100; j++){
 						int activeCell = i*100+j;
 						printf("%d\n", activeCell);
-						printf("%d",neighbourValid(1, activeCell));
+						for(int i = 1; i<=8; i++){
+							int ret = neighbourValid(i, activeCell);
+							if(ret==404){
+								printf("Neighbour %d of cell %d is not available\n", i, activeCell);
+							}
+						}
+						char c;
+						scanf("%c", &c);
 						// If alive
 						if(game[activeCell]){
 								// Rule 1 - Underpopulation
@@ -88,7 +95,7 @@ void gameTick(void){
 
 
 // Returns if <position> is a valid neighbour of cell <active> 
-// Either 1 or 0
+// Either 1 or 0 or 404 (if the neighbour is not available due to corner/borders)
 //
 // Positions:
 //
@@ -107,23 +114,23 @@ int neighbourValid(int position, int active){
 		// If corner top left
 		if(y == 0){
 			if((position == 5) || (position == 7) || (position == 8)){
-				return 1;
+				return game[position];
 			}else{
-				return 0;
+				return 404;
 			}
 		// If corner bottom left
 		}else if(y == 99){
 			if((position == 2) || (position == 3) || (position == 5)){
-				return 1;
+				return game[position];
 			}else{
-				return 0;
+				return 404;
 			}
 		// Border left no special case
 		}else{
 			if((position == 2) || (position == 3) || (position == 5) || (position == 7) || (position == 8)){
-				return 1;
+					return game[position];
 			}else{
-				return 0;
+				return 404;
 			}
 		}
 	// If border right
@@ -131,23 +138,23 @@ int neighbourValid(int position, int active){
 			// If corner top right
 			if(y == 0){
 				if((position == 4) || (position == 6) || (position == 7)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			// If corner bottom right
 			}else if(y == 99){
 				if((position == 1) || (position == 2) || (position == 4)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			// Border right no special case
 			}else{
 				if((position == 1) || (position == 2) || (position == 4) || (position == 6) || (position == 7)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			}
 	// Border top
@@ -155,23 +162,23 @@ int neighbourValid(int position, int active){
 			// If corner top left
 			if(x == 0){
 				if((position == 5) || (position == 7) || (position == 8)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			// If corner top right
 			}else if(x == 99){
 				if((position == 4) || (position == 6) || (position == 7)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			// Border top no special case
 			}else{
 				if((position == 4) || (position == 5) || (position == 6) || (position == 7) || (position == 8)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			}
 	// Border bottom
@@ -179,27 +186,27 @@ int neighbourValid(int position, int active){
 			// If corner bottom left
 			if(x == 0){
 				if((position == 2) || (position == 3) || (position == 5)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			// If corner bottom right
 			}else if(x == 99){
 				if((position == 1) || (position == 2) || (position == 4)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			// Border bottom no special case
 			}else{
 				if((position == 1) || (position == 2) || (position == 3) || (position == 4) || (position == 5)){
-					return 1;
+					return game[position];
 				}else{
-					return 0;
+					return 404;
 				}
 			}
 	}else{
-		return 1;
+		return game[position];
 	}
 	/* printf("x: %d\ny: %d\n\n", x, y); */
 	/* char c; */
