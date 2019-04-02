@@ -19,6 +19,7 @@ int main(int argc, char **argv){
 		return 0;
 }
 
+// Render everything
 void render(void){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -54,12 +55,13 @@ void render(void){
 		glutSwapBuffers();
 }
 
+// The logic of the game. Checks and changes cells.
 void gameTick(void){
 		for(int i = 0; i<100; i++){
 				for(int j = 0; j<100; j++){
 						int activeCell = i*100+j;
 						printf("%d\n", activeCell);
-						neighbourValid(7, activeCell);
+						printf("%d",neighbourValid(1, activeCell));
 						// If alive
 						if(game[activeCell]){
 								// Rule 1 - Underpopulation
@@ -85,6 +87,9 @@ void gameTick(void){
 
 
 
+// Returns if <position> is a valid neighbour of cell <active> 
+// Either 1 or 0
+//
 // Positions:
 //
 // 1 2 3
@@ -92,9 +97,6 @@ void gameTick(void){
 // 6 7 8
 //
 // A = Active(array index)
-//
-// Returns if <position> is a valid neighbour of cell <active> 
-// Either 1 or 0
 
 int neighbourValid(int position, int active){
 	int y = active/100;
@@ -104,50 +106,100 @@ int neighbourValid(int position, int active){
 	if(x == 0){
 		// If corner top left
 		if(y == 0){
-
+			if((position == 5) || (position == 7) || (position == 8)){
+				return 1;
+			}else{
+				return 0;
+			}
 		// If corner bottom left
 		}else if(y == 99){
-
+			if((position == 2) || (position == 3) || (position == 5)){
+				return 1;
+			}else{
+				return 0;
+			}
 		// Border left no special case
 		}else{
-
+			if((position == 2) || (position == 3) || (position == 5) || (position == 7) || (position == 8)){
+				return 1;
+			}else{
+				return 0;
+			}
 		}
 	// If border right
 	}else if(x == 99){
 			// If corner top right
 			if(y == 0){
-
+				if((position == 4) || (position == 6) || (position == 7)){
+					return 1;
+				}else{
+					return 0;
+				}
 			// If corner bottom right
 			}else if(y == 99){
-
+				if((position == 1) || (position == 2) || (position == 4)){
+					return 1;
+				}else{
+					return 0;
+				}
 			// Border right no special case
 			}else{
-
+				if((position == 1) || (position == 2) || (position == 4) || (position == 6) || (position == 7)){
+					return 1;
+				}else{
+					return 0;
+				}
 			}
 	// Border top
 	}else if(y == 0){
 			// If corner top left
 			if(x == 0){
-
+				if((position == 5) || (position == 7) || (position == 8)){
+					return 1;
+				}else{
+					return 0;
+				}
 			// If corner top right
 			}else if(x == 99){
-
-			// Border right no special case
+				if((position == 4) || (position == 6) || (position == 7)){
+					return 1;
+				}else{
+					return 0;
+				}
+			// Border top no special case
 			}else{
-
+				if((position == 4) || (position == 5) || (position == 6) || (position == 7) || (position == 8)){
+					return 1;
+				}else{
+					return 0;
+				}
 			}
 	// Border bottom
 	}else if(y == 99){
 			// If corner bottom left
 			if(x == 0){
-
+				if((position == 2) || (position == 3) || (position == 5)){
+					return 1;
+				}else{
+					return 0;
+				}
 			// If corner bottom right
 			}else if(x == 99){
-
+				if((position == 1) || (position == 2) || (position == 4)){
+					return 1;
+				}else{
+					return 0;
+				}
 			// Border bottom no special case
 			}else{
-
+				if((position == 1) || (position == 2) || (position == 3) || (position == 4) || (position == 5)){
+					return 1;
+				}else{
+					return 0;
+				}
 			}
+	}else{
+		return 1;
 	}
 	/* printf("x: %d\ny: %d\n\n", x, y); */
 	/* char c; */
