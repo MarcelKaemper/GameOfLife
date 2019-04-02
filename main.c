@@ -60,28 +60,41 @@ void gameTick(void){
 		for(int i = 0; i<100; i++){
 				for(int j = 0; j<100; j++){
 						int activeCell = i*100+j;
-						printf("%d\n", activeCell);
+						int neighbours = 0;
+						/* printf("%d\n", activeCell); */
 						for(int i = 1; i<=8; i++){
 							int ret = neighbourValid(i, activeCell);
-							if(ret==404){
-								printf("Neighbour %d of cell %d is not available\n", i, activeCell);
+							if(ret==1){
+								/* printf("Neighbour %d of cell %d is not available\n", i, activeCell); */
+								neighbours += 1;
 							}
 						}
-						char c;
-						scanf("%c", &c);
 						// If alive
-						if(game[activeCell]){
+						if(game[activeCell] == 1){
 								// Rule 1 - Underpopulation
+								printf("%d", neighbours);
+								/* char c; */
+								/* scanf("%c", &c); */
+
+								if(neighbours < 2){
+									game[activeCell] = 0;
+								// Rule 2
+								}else if((neighbours == 2) || (neighbours == 3)){
+
+								// Rule 3 - Overpopulation
+								}else if(neighbours > 3){
+									game[activeCell] = 0;
+								}
 								
 								// Kill
 								/* game[i*100+j] = 0; */
 
-								// Rule 2 
-								// Rule 3 - Overpopulation
-
 						//If dead
 						}else{
 								// Rule 4 - Reproduction
+								if(neighbours == 3){
+									game[activeCell] = 1;
+								}
 								
 								// Revive
 								/* game[i*100+j] = 1; */
