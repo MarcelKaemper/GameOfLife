@@ -82,6 +82,9 @@ void gameTick(void){
 		}
 }
 
+
+
+
 // Position:
 //
 // 1 2 3
@@ -95,9 +98,78 @@ int getNeighbours(int position, int active){
 	int y = active/100;
 	int x = ((double)(active%100)/100)*100;
 
-	printf("x: %d\ny: %d\n\n", x, y);
-	char c;
-	scanf("%c",&c);
+	// If border left
+	if(x == 0){
+		// If corner top left
+		if(y == 0){
 
-	return 1;
+		// If corner bottom left
+		}else if(y == 99){
+
+		// Border left no special case
+		}else{
+
+		}
+	// If border right
+	}else if(x == 99){
+			// If corner top right
+			if(y == 0){
+
+			// If corner bottom right
+			}else if(y == 99){
+
+			// Border right no special case
+			}else{
+
+			}
+	// Border top
+	}else if(y == 0){
+			// If corner top left
+			if(x == 0){
+
+			// If corner top right
+			}else if(x == 99){
+
+			// Border right no special case
+			}else{
+
+			}
+	// Border bottom
+	}else if(y == 99){
+			// If corner bottom left
+			if(x == 0){
+
+			// If corner bottom right
+			}else if(x == 99){
+
+			// Border bottom no special case
+			}else{
+
+			}
+	}
+
+
+
+
+
+	if(position == 1){
+		return game[(active-100)-1];
+	}else if(position == 2){
+
+	}else if(position == 3){
+
+	}else if(position == 4){
+
+	}else if(position == 5){
+
+	}else if(position == 6){
+
+	}else if(position == 7){
+
+	}else if(position == 8){
+
+	}
+	/* printf("x: %d\ny: %d\n\n", x, y); */
+	/* char c; */
+	/* scanf("%c",&c); */
 }
