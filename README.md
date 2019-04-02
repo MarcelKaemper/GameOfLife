@@ -1,9 +1,11 @@
-# GameOfLife
-Conway's Game of Life in C/OpenGL  
+# GameOfLife  
+This was my first project in C and also the first one with OpenGL/glut.  
 
-## Math 
-max = max amount of elements in a row  
+## Math  
+The formulas I developed to find either the index of the element when x and y coordinates are given or the x and y coordinates when the index is given.  
+max = max amount of elements in a row
 x,y = coordinates  
+  
 ### Index by gridpos
 <img src="https://latex.codecogs.com/gif.latex?\large&space;index&space;=&space;y&space;\cdot&space;max&space;&plus;&space;x" title="\large index = y \cdot max + x" />
 
