@@ -5,7 +5,7 @@
 
 void render(void);
 void gameTick(void);
-int getNeighbours(int position, int active);
+int neighbourValid(int position, int active);
 
 int main(int argc, char **argv){
 		glutInit(&argc, argv);
@@ -59,7 +59,7 @@ void gameTick(void){
 				for(int j = 0; j<100; j++){
 						int activeCell = i*100+j;
 						printf("%d\n", activeCell);
-						getNeighbours(7, activeCell);
+						neighbourValid(7, activeCell);
 						// If alive
 						if(game[activeCell]){
 								// Rule 1 - Underpopulation
@@ -85,16 +85,18 @@ void gameTick(void){
 
 
 
-// Position:
+// Positions:
 //
 // 1 2 3
 // 4 A 5
 // 6 7 8
 //
 // A = Active(array index)
-// Returns dead or alive
+//
+// Returns if <position> is a valid neighbour of cell <active> 
+// Either 1 or 0
 
-int getNeighbours(int position, int active){
+int neighbourValid(int position, int active){
 	int y = active/100;
 	int x = ((double)(active%100)/100)*100;
 
@@ -146,28 +148,6 @@ int getNeighbours(int position, int active){
 			}else{
 
 			}
-	}
-
-
-
-
-
-	if(position == 1){
-		return game[(active-100)-1];
-	}else if(position == 2){
-
-	}else if(position == 3){
-
-	}else if(position == 4){
-
-	}else if(position == 5){
-
-	}else if(position == 6){
-
-	}else if(position == 7){
-
-	}else if(position == 8){
-
 	}
 	/* printf("x: %d\ny: %d\n\n", x, y); */
 	/* char c; */
