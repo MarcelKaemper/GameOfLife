@@ -3,6 +3,8 @@
 #include "array.c"
 
 void render(void);
+void gameTick(void);
+int getNeighbours(int position, int active);
 
 int main(int argc, char **argv){
 		glutInit(&argc, argv);
@@ -20,9 +22,10 @@ void render(void){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		float size = 0.015;
-
 		int cols = 100;
 		int rows = 100;
+
+		gameTick();
 
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
@@ -46,5 +49,50 @@ void render(void){
 				}
 		}
 
+		glutPostRedisplay();
 		glutSwapBuffers();
+}
+
+void gameTick(void){
+		for(int i = 0; i<100; i++){
+				for(int j = 0; j<100; j++){
+						int activeCell = i*100+j;
+						getNeighbours(7, activeCell);
+						// If alive
+						if(game[activeCell]){
+								// Rule 1 - Underpopulation
+								
+								// Kill
+								/* game[i*100+j] = 0; */
+
+								// Rule 2 
+								// Rule 3 - Overpopulation
+
+						//If dead
+						}else{
+								// Rule 4 - Reproduction
+								
+								// Revive
+								/* game[i*100+j] = 1; */
+
+						}
+				}
+		}
+}
+
+// Position:
+//
+// 1 2 3
+// 4 A 5
+// 6 7 8
+//
+// A = Active(array index)
+// Returns dead or alive
+
+int getNeighbours(int position, int active){
+	int x = floor(active/100);
+	int y = ((active%100)/100)*100;
+
+
+	return status;
 }
