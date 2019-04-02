@@ -26,7 +26,6 @@ void render(void){
 		int cols = 100;
 		int rows = 100;
 
-		gameTick();
 
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
@@ -49,6 +48,7 @@ void render(void){
 						glFlush();
 				}
 		}
+		gameTick();
 
 		glutPostRedisplay();
 		glutSwapBuffers();
@@ -58,6 +58,7 @@ void gameTick(void){
 		for(int i = 0; i<100; i++){
 				for(int j = 0; j<100; j++){
 						int activeCell = i*100+j;
+						printf("%d\n", activeCell);
 						getNeighbours(7, activeCell);
 						// If alive
 						if(game[activeCell]){
@@ -91,9 +92,12 @@ void gameTick(void){
 // Returns dead or alive
 
 int getNeighbours(int position, int active){
-	int x = floor(active/100);
-	int y = ((active%100)/100)*100;
+	int y = active/100;
+	int x = ((double)(active%100)/100)*100;
 
+	printf("x: %d\ny: %d\n\n", x, y);
+	char c;
+	scanf("%c",&c);
 
 	return 1;
 }
