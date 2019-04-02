@@ -11,6 +11,7 @@ gcc -lGL -lglut -lm main.c
 
 ## Math  
 The formulas I developed to find either the index of the element when x and y coordinates are given or the x and y coordinates when the index is given.   
+  
 max = max amount of elements in a row  
 x,y = coordinates  
   
