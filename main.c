@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include "array.c"
+#include <math.h>
 
 void render(void);
 void gameTick(void);
@@ -94,5 +95,5 @@ int getNeighbours(int position, int active){
 	int y = ((active%100)/100)*100;
 
 
-	return status;
+	return 1;
 }
