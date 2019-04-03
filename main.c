@@ -69,15 +69,11 @@ void gameTick(void){
 					neighbours += 1;
 				}
 			}
-			printf("Neighbours of (%d|%d): %d\n", i, j, neighbours);
 			// If alive
-			//
 			if(game[activeCell] == 1){
 				// Rule 1 - Underpopulation
 				if(neighbours < 2){
 					game2[activeCell] = 0;
-					printf("Killing %d for the next generation\n", activeCell);
-					printf("game2[%d]:%d\n", activeCell, game2[activeCell]);
 				// Rule 2
 				}else if((neighbours == 2) || (neighbours == 3)){
 					game2[activeCell] = 1;
