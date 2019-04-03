@@ -36,9 +36,9 @@ void render(void){
 				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
 						if(game[i*100+j] == 0){
-							glColor3f(1,0,0);
+							glColor3f(0,0,0);
 						}else{
-							glColor3f(0,0,1);
+							glColor3f(1,1,1);
 						}
 						glVertex2f(-1+size*j,1-size*i);
 
@@ -63,11 +63,9 @@ void gameTick(void){
 		for(int j = 0; j<100; j++){
 			int activeCell = i*100+j;
 			int neighbours = 0;
-			/* printf("%d\n", activeCell); */
 			for(int i = 1; i<=8; i++){
 				int ret = neighbourValid(i, activeCell);
 				if(ret==1){
-					/* printf("Neighbour %d of cell %d is not available\n", i, activeCell); */
 					neighbours += 1;
 				}
 			}
@@ -76,9 +74,6 @@ void gameTick(void){
 			//
 			if(game[activeCell] == 1){
 				// Rule 1 - Underpopulation
-				/* printf("%d", neighbours); */
-				/* char c; */
-				/* scanf("%c", &c); */
 				if(neighbours < 2){
 					game2[activeCell] = 0;
 					printf("Killing %d for the next generation\n", activeCell);
@@ -91,10 +86,6 @@ void gameTick(void){
 				}else if(neighbours > 3){
 					game2[activeCell] = 0;
 				}
-	
-					// Kill
-					/* game[i*100+j] = 0; */
-			
 			//If dead
 			}else{
 			// Rule 4 - Reproduction
@@ -103,17 +94,12 @@ void gameTick(void){
 				}else{
 					game[activeCell] = 0;
 				}	
-	
-					// Revive
-					/* game[i*100+j] = 1; */
-			}
-			/* char c; */
-			/* scanf("%c", &c); */
 			}
 		}
-		for(int i = 0; i<sizeof(game)/sizeof(game[0]); i++){
-			game[i] = game2[i];
-		}
+	}
+	for(int i = 0; i<sizeof(game)/sizeof(game[0]); i++){
+		game[i] = game2[i];
+	}
 }
 
 
@@ -237,9 +223,6 @@ int neighbourValid(int position, int active){
 	}else{
 		return getNeighbourStatus(position, active);
 	}
-	/* printf("x: %d\ny: %d\n\n", x, y); */
-	/* char c; */
-	/* scanf("%c",&c); */
 }
 
 // Returns status of cell <active> in positition <position> 
