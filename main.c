@@ -9,43 +9,36 @@ void gameTick(void);
 int neighbourValid(int position, int active);
 int getNeighbourStatus(int position, int active);
 
-int repeat = 1;
-
 int main(int argc, char **argv){
-		glutInit(&argc, argv);
-		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-		glutInitWindowSize(800,600);
-		glutInitWindowPosition(100,100);
-		glutCreateWindow("Main");
-		glutDisplayFunc(render);
-		glutMainLoop();
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitWindowSize(800,600);
+	glutInitWindowPosition(100,100);
+	glutCreateWindow("Main");
+	glutDisplayFunc(render);
+	glutMainLoop();
 
-		return 0;
+	return 0;
 }
 
 // Render everything
 void render(void){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 		float size = 0.03;
 		int cols = 100;
 		int rows = 100;
 
+		gameTick();
+
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
-						if(repeat % 2 != 0){
-							if(game[i*100+j] == 0){
-								glColor3f(1,0,0);
-							}else{
-								glColor3f(0,0,1);
-							}
+						if(game[i*100+j] == 0){
+							glColor3f(1,0,0);
 						}else{
-							if(game2[i*100+j] == 0){
-								glColor3f(1,0,0);
-							}else{
-								glColor3f(0,0,1);
-							}
+							glColor3f(0,0,1);
 						}
 						glVertex2f(-1+size*j,1-size*i);
 
@@ -60,93 +53,67 @@ void render(void){
 				}
 		}
 
-		gameTick();
-		repeat += 1;
-
 		glutPostRedisplay();
 		glutSwapBuffers();
 }
 
 // The logic of the game. Checks and changes cells.
 void gameTick(void){
-		for(int i = 0; i<100; i++){
-				for(int j = 0; j<100; j++){
-						int activeCell = i*100+j;
-						int neighbours = 0;
-						/* printf("%d\n", activeCell); */
-						for(int i = 1; i<=8; i++){
-							int ret = neighbourValid(i, activeCell);
-							if(ret==1){
-								/* printf("Neighbour %d of cell %d is not available\n", i, activeCell); */
-								neighbours += 1;
-							}
-						}
-						// If alive
-						//
-						if(repeat % 2 != 0){
-							if(game[activeCell] == 1){
-									// Rule 1 - Underpopulation
-									/* printf("%d", neighbours); */
-									/* char c; */
-									/* scanf("%c", &c); */
-									if(neighbours < 2){
-										game2[activeCell] = 0;
-									// Rule 2
-									}else if((neighbours == 2) || (neighbours == 3)){
-										game2[activeCell] = 1;
-
-									// Rule 3 - Overpopulation
-									}else if(neighbours > 3){
-										game2[activeCell] = 0;
-									}
-									
-									// Kill
-									/* game[i*100+j] = 0; */
-
-							//If dead
-							}else{
-									// Rule 4 - Reproduction
-										if(neighbours == 3){
-											game2[activeCell] = 1;
-										}
-										
-										// Revive
-										/* game[i*100+j] = 1; */
-							}
-						}else{
-								if(game2[activeCell] == 1){
-										// Rule 1 - Underpopulation
-										/* printf("%d", neighbours); */
-										/* char c; */
-										/* scanf("%c", &c); */
-
-										if(neighbours < 2){
-											game[activeCell] = 0;
-										// Rule 2
-										}else if((neighbours == 2) || (neighbours == 3)){
-											game[activeCell] = 1;
-
-										// Rule 3 - Overpopulation
-										}else if(neighbours > 3){
-											game[activeCell] = 0;
-										}
-										
-										// Kill
-										/* game[i*100+j] = 0; */
-
-								//If dead
-								}else{
-										// Rule 4 - Reproduction
-											if(neighbours == 3){
-												game[activeCell] = 1;
-											}
-											
-											// Revive
-											/* game[i*100+j] = 1; */
-								}
-						}
+	for(int i = 0; i<100; i++){
+		for(int j = 0; j<100; j++){
+			int activeCell = i*100+j;
+			int neighbours = 0;
+			/* printf("%d\n", activeCell); */
+			for(int i = 1; i<=8; i++){
+				int ret = neighbourValid(i, activeCell);
+				if(ret==1){
+					/* printf("Neighbour %d of cell %d is not available\n", i, activeCell); */
+					neighbours += 1;
+				}
+			}
+			printf("Neighbours of (%d|%d): %d\n", i, j, neighbours);
+			// If alive
+			//
+			if(game[activeCell] == 1){
+				// Rule 1 - Underpopulation
+				/* printf("%d", neighbours); */
+				/* char c; */
+				/* scanf("%c", &c); */
+				if(neighbours < 2){
+					game2[activeCell] = 0;
+					printf("Killing %d for the next generation\n", activeCell);
+					printf("game2[%d]:%d\n", activeCell, game2[activeCell]);
+				// Rule 2
+				}else if((neighbours == 2) || (neighbours == 3)){
+					game2[activeCell] = 1;
+	
+				// Rule 3 - Overpopulation
+				}else if(neighbours > 3){
+					game2[activeCell] = 0;
+				}
+	
+					// Kill
+					/* game[i*100+j] = 0; */
+			
+			//If dead
+			}else{
+			// Rule 4 - Reproduction
+				if(neighbours == 3){
+					game2[activeCell] = 1;
+				}else{
+					game[activeCell] = 0;
+				}	
+	
+					// Revive
+					/* game[i*100+j] = 1; */
+			}
+			/* char c; */
+			/* scanf("%c", &c); */
+			}
 		}
-	}
+		for(int i = 0; i<sizeof(game)/sizeof(game[0]); i++){
+			game[i] = game2[i];
+		}
 }
 
 
@@ -286,41 +253,21 @@ int neighbourValid(int position, int active){
 //
 // A = Active(array index)
 int getNeighbourStatus(int position, int active){
-	if(repeat % 2 != 0){
-			if(position == 1){
-				return game[active-100-1];
-			}else if(position == 2){
-				return game[active-100];
-			}else if(position == 3){
-				return game[active-100+1];
-			}else if(position == 4){
-				return game[active-1];
-			}else if(position == 5){
-				return game[active+1];
-			}else if(position == 6){
-				return game[active+100-1];
-			}else if(position == 7){
-				return game[active+100];
-			}else if(position == 8){
-				return game[active+100+1];
-			}
-	}else{
-			if(position == 1){
-				return game2[active-100-1];
-			}else if(position == 2){
-				return game2[active-100];
-			}else if(position == 3){
-				return game2[active-100+1];
-			}else if(position == 4){
-				return game2[active-1];
-			}else if(position == 5){
-				return game2[active+1];
-			}else if(position == 6){
-				return game2[active+100-1];
-			}else if(position == 7){
-				return game2[active+100];
-			}else if(position == 8){
-				return game2[active+100+1];
-			}
+	if(position == 1){
+		return game[active-100-1];
+	}else if(position == 2){
+		return game[active-100];
+	}else if(position == 3){
+		return game[active-100+1];
+	}else if(position == 4){
+		return game[active-1];
+	}else if(position == 5){
+		return game[active+1];
+	}else if(position == 6){
+		return game[active+100-1];
+	}else if(position == 7){
+		return game[active+100];
+	}else if(position == 8){
+		return game[active+100+1];
 	}
 }
