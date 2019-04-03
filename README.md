@@ -1,5 +1,6 @@
 # GameOfLife  
 This was my first project in C and also the first one with OpenGL/glut.  
+The code is a bloody mess right now.  
 I safe the status of each cell in a 100x100 array as you can see in array.c. This is obviously not the best solution.  
 I created a javascript program that creates the array and outputs it in the console.    
 
