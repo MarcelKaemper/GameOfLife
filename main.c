@@ -42,9 +42,9 @@ void render(void){
 				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
 						if(game[i*100+j] == 0){
-							glColor3f(0,0,0);
+							glColor3f(!mode,!mode,!mode);
 						}else{
-							glColor3f(1,1,1);
+							glColor3f(mode, mode, mode);
 						}
 						glVertex2f(-1+size*j,1-size*i);
 
