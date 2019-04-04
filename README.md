@@ -7,7 +7,7 @@ I safe the status of each cell in a 100x100 array. The changes are stored in a s
 ## Compilation
 Using gcc:  
 ```
-gcc -lGL -lglut main.c
+gcc -lGL -lglut -lm main.c
 ```
 
 ## Math  
