@@ -5,17 +5,21 @@
 #include <math.h>
 
 void render(void);
+void mouse(int button, int state, int x, int y);
 void gameTick(void);
 int neighbourValid(int position, int active);
 int getNeighbourStatus(int position, int active);
+int getIndex(float x, float y);
+void changeStatus(int index);
 
 int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(800,600);
+	glutInitWindowSize(600,600);
 	glutInitWindowPosition(100,100);
 	glutCreateWindow("Main");
 	glutDisplayFunc(render);
+	glutMouseFunc(mouse);
 	glutMainLoop();
 
 	return 0;
@@ -25,12 +29,9 @@ int main(int argc, char **argv){
 void render(void){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-		float size = 0.03;
+		float size = 0.02;
 		int cols = 100;
 		int rows = 100;
-
-		gameTick();
 
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
@@ -52,6 +53,8 @@ void render(void){
 						glFlush();
 				}
 		}
+
+		gameTick();
 
 		glutPostRedisplay();
 		glutSwapBuffers();
@@ -249,4 +252,19 @@ int getNeighbourStatus(int position, int active){
 	}else if(position == 8){
 		return game[active+100+1];
 	}
+}
+
+void mouse(int button, int state, int x, int y){
+		if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)){
+				changeStatus(getIndex(x*1.0, y*1.0));
+		}
+}
+
+int getIndex(float x, float y){
+	printf("%f, %f\n", floor(x/10.0), floor(y/10.0));
+	return floor(y/6.0)*100+(floor(x/6.0));
+}
+
+void changeStatus(int index){
+	game[index] = !game[index];
 }
