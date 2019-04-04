@@ -9,11 +9,12 @@ void mouse(int button, int state, int x, int y);
 void keyboard(unsigned char key, int x, int y);
 
 void gameTick(void);
+void changeStatus(int index);
 int neighbourValid(int position, int active);
 int getNeighbourStatus(int position, int active);
 int getIndex(float x, float y);
-void changeStatus(int index);
 
+// Edit or Play indicator
 int mode = 0;
 
 int main(int argc, char **argv){
@@ -267,10 +268,12 @@ void mouse(int button, int state, int x, int y){
 		}
 }
 
+// getIndex by coordinates
 int getIndex(float x, float y){
 	return floor(y/6.0)*100+(floor(x/6.0));
 }
 
+// Inverts the value of cell <index>
 void changeStatus(int index){
 	game[index] = !game[index];
 }
