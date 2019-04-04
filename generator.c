@@ -56,11 +56,8 @@ void render(void){
 
 void mouse(int button, int state, int x, int y){
 		if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)){
-				printf("%f, %f\n", floor(x/10.0), floor(y/10.0));
-				int index = getIndex(x*1.0, y*1.0);
-				changeStatus(index);
+				changeStatus(getIndex(x*1.0, y*1.0));
 		}
-
 }
 
 int getIndex(float x, float y){
