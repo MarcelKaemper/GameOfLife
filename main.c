@@ -4,6 +4,7 @@
 #include "array2.c"
 #include <math.h>
 
+// Callback functions
 void render(void);
 void mouse(int button, int state, int x, int y);
 void keyboard(unsigned char key, int x, int y);
@@ -18,14 +19,17 @@ int getIndex(float x, float y);
 int mode = 0;
 
 int main(int argc, char **argv){
+	// Initilization
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(600,600);
 	glutInitWindowPosition(100,100);
 	glutCreateWindow("Main");
+	// Callback functions
 	glutDisplayFunc(render);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboard);
+
 	glutMainLoop();
 
 	return 0;
@@ -39,6 +43,7 @@ void render(void){
 		int cols = 100;
 		int rows = 100;
 
+		// Draw the field
 		for(int i = 0; i<cols; i++){
 				for(int j = 0; j<rows; j++){
 						glBegin(GL_POLYGON);
@@ -60,6 +65,7 @@ void render(void){
 				}
 		}
 
+		// Execute a gametick if it's in play-mode
 		if(mode){
 			gameTick();
 		}
@@ -68,12 +74,33 @@ void render(void){
 		glutSwapBuffers();
 }
 
+// Mouse callback
+void mouse(int button, int state, int x, int y){
+		// If in edit mode and the left mouse button is pressed, 
+		// change the status of the cell you clicked on
+		if((!mode) && (button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)){
+				changeStatus(getIndex(x*1.0, y*1.0));
+		}
+}
+
+// Keyboard callback
+void keyboard(unsigned char key, int x, int y){
+	// Invert mode if spacebar is pressed
+	if(key == 32){
+		mode = !mode;
+	}
+}
+
 // The logic of the game. Checks and changes cells.
 void gameTick(void){
+	// Execute for every cell
 	for(int i = 0; i<100; i++){
 		for(int j = 0; j<100; j++){
+
 			int activeCell = i*100+j;
 			int neighbours = 0;
+
+			// Get the number of neighbours of the current cell
 			for(int i = 1; i<=8; i++){
 				int ret = neighbourValid(i, activeCell);
 				if(ret==1){
@@ -104,14 +131,14 @@ void gameTick(void){
 			}
 		}
 	}
+	// Copy the buffer into the main array
 	for(int i = 0; i<sizeof(game)/sizeof(game[0]); i++){
 		game[i] = game2[i];
 	}
 }
 
-
-
-
+// TODO Rewrite function
+//
 // Returns if <position> is a valid neighbour of cell <active> 
 // Either 1 or 0 or 404 (if the neighbour is not available due to corner/borders)
 //
@@ -126,7 +153,6 @@ void gameTick(void){
 //
 //
 //
-
 int neighbourValid(int position, int active){
 	int y = active/100;
 	int x = ((double)(active%100)/100)*100;
@@ -262,11 +288,6 @@ int getNeighbourStatus(int position, int active){
 	}
 }
 
-void mouse(int button, int state, int x, int y){
-		if((!mode) && (button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)){
-				changeStatus(getIndex(x*1.0, y*1.0));
-		}
-}
 
 // getIndex by coordinates
 int getIndex(float x, float y){
@@ -276,10 +297,4 @@ int getIndex(float x, float y){
 // Inverts the value of cell <index>
 void changeStatus(int index){
 	game[index] = !game[index];
-}
-
-void keyboard(unsigned char key, int x, int y){
-	if(key == 32){
-		mode = !mode;
-	}
 }
