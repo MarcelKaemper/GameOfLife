@@ -6,11 +6,15 @@
 
 void render(void);
 void mouse(int button, int state, int x, int y);
+void keyboard(unsigned char key, int x, int y);
+
 void gameTick(void);
 int neighbourValid(int position, int active);
 int getNeighbourStatus(int position, int active);
 int getIndex(float x, float y);
 void changeStatus(int index);
+
+int mode = 0;
 
 int main(int argc, char **argv){
 	glutInit(&argc, argv);
@@ -20,6 +24,7 @@ int main(int argc, char **argv){
 	glutCreateWindow("Main");
 	glutDisplayFunc(render);
 	glutMouseFunc(mouse);
+	glutKeyboardFunc(keyboard);
 	glutMainLoop();
 
 	return 0;
@@ -54,7 +59,9 @@ void render(void){
 				}
 		}
 
-		gameTick();
+		if(mode){
+			gameTick();
+		}
 
 		glutPostRedisplay();
 		glutSwapBuffers();
@@ -255,16 +262,21 @@ int getNeighbourStatus(int position, int active){
 }
 
 void mouse(int button, int state, int x, int y){
-		if((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)){
+		if((!mode) && (button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)){
 				changeStatus(getIndex(x*1.0, y*1.0));
 		}
 }
 
 int getIndex(float x, float y){
-	printf("%f, %f\n", floor(x/10.0), floor(y/10.0));
 	return floor(y/6.0)*100+(floor(x/6.0));
 }
 
 void changeStatus(int index){
 	game[index] = !game[index];
+}
+
+void keyboard(unsigned char key, int x, int y){
+	if(key == 32){
+		mode = !mode;
+	}
 }
